@@ -1,5 +1,5 @@
 import mysql.connector
-from flask import Flask, make_response, jsonify, request
+from flask import Flask, make_response, jsonify, request, render_template
 
 # configurações de conexão com o banco de dados:
 mydb = mysql.connector.connect(
@@ -40,12 +40,16 @@ def get_tasks():
                 }
             )
 
-        return make_response(
-            jsonify(
-                message='Lista de Tarefas',
-                tasks_list=tasks
-                )
-        )
+        return render_template('tasks.html', tasks=tasks)
+
+        #return make_response(
+        #    jsonify(
+        #        message='Lista de Tarefas',
+        #        tasks_list=tasks
+        #        )
+        #)
+        
+
     except Exception as e:
         return make_response(jsonify(message=str(e)), 500)
 
